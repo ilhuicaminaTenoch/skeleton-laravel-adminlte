@@ -173,11 +173,7 @@ return [
     */
 
     'menu' => [
-        [
-            'text' => 'search',
-            'search' => true,
-            'topnav' => true,
-        ],
+        'MAIN NAVIGATION',
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
@@ -190,7 +186,7 @@ return [
             'label'       => 4,
             'label_color' => 'success',
         ],
-        ['header' => 'account_settings'],
+        'ACCOUNT SETTINGS',
         [
             'text' => 'profile',
             'url'  => 'admin/settings',
