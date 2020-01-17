@@ -11,10 +11,33 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => ['guest']], function () {
+    Route::get('/', 'Auth\LoginController@showLoginForm');
+    Route::match(array('GET', 'POST'), 'login', 'Auth\LoginController@login')->name('login');
 });
 
-Auth::routes();
+Route::group(['middleware' => ['auth']], function () {
+    Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+    Route::get('/home', function () {
+        return view('home');
+    })->name('home');
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+    /*Route::group(['middleware' => ['Administrador']], function () {
+        Route::get('/rol','RolController@index');
+        Route::get('/rol/select-rol','RolController@selectRol');
+
+        Route::get('/user','UserController@index');
+        Route::post('/user/registrar','UserController@store');
+        Route::put('/user/actualizar','UserController@update');
+        Route::put('/user/activar','UserController@activar');
+        Route::put('/user/desactivar','UserController@desactivar');
+
+    });*/
+
+
+});
+
+/*Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');*/
