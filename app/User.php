@@ -6,6 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @method static join(string $string, string $string1, string $string2, string $string3)
+ */
 class User extends Authenticatable
 {
     use Notifiable;

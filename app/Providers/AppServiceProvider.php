@@ -26,24 +26,41 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Dispatcher $events)
     {
         $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
-            $event->menu->add('ESCRITORIO');
-            $event->menu->add([
-                'text' => 'Acceso',
-                'icon' => 'fas fa-fw fa-universal-access',
-                'submenu' => [
-                    [
-                        'text' => 'Usuarios',
-                        'icon' => 'fas fa-fw fa-user-tie',
-                        'url' => '#',
-                    ],
-                    [
-                        'text' => 'Roles',
-                        'icon' => 'fas fa-fw fa-portrait',
-                        'url' => '#',
-                    ],
+            $idRol = $event->auth->id_rol;
+            if ($idRol == 1) {
+                $event->menu->add('ADMINISTRADOR');
+                $event->menu->add([
+                    'text' => 'Acceso',
+                    'icon' => 'fas fa-fw fa-universal-access',
+                    'submenu' => [
+                        [
+                            'text' => 'Usuarios',
+                            'icon' => 'fas fa-fw fa-user-tie',
+                            'url' => '/user',
+                        ],
+                        [
+                            'text' => 'Roles',
+                            'icon' => 'fas fa-fw fa-portrait',
+                            'url' => '#',
+                        ],
 
-                ]
-            ]);
+                    ]
+                ]);
+            }elseif ($idRol == 2){
+                $event->menu->add('EDITOR');
+                $event->menu->add([
+                    'text' => 'Acceso',
+                    'icon' => 'fas fa-fw fa-universal-access',
+                    'submenu' => [
+                        [
+                            'text' => 'Usuarios',
+                            'icon' => 'fas fa-fw fa-user-tie',
+                            'url' => '#',
+                        ],
+
+                    ]
+                ]);
+            }
         });
     }
 }
