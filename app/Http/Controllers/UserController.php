@@ -92,28 +92,28 @@ class UserController extends Controller
         $criterio = $request->criterio;
 
         if ($buscar == ''){
-            $proveedor = User::join('roles', 'users.id_rol', '=', 'roles.id')
-                ->select('users.id','users.nombre','users.password',
-                    'users.activo', 'users.id_rol', 'roles.nombre as rol')
+            $usuarios = User::join('roles', 'users.id_rol', '=', 'roles.id')
+                ->select('users.id','users.nombre','users.password', 'users.email',
+                    'users.activo as estatus' ,'users.id_rol', 'roles.nombre as rol')
                 ->orderBy('users.nombre','asc')->paginate(3);
         }else{
-            $proveedor = User::join('roles', 'users.id_rol', '=', 'roles.id')
-                ->select('users.id','users.nombre','users.password',
-                    'users.activo', 'users.id_rol', 'roles.nombre as rol')
+            $usuarios = User::join('roles', 'users.id_rol', '=', 'roles.id')
+                ->select('users.id','users.nombre','users.password', 'users.email',
+                    'users.activo as estatus', 'users.id_rol', 'roles.nombre as rol')
                 ->where('users.'.$criterio, 'like', '%'.$buscar.'%')
                 ->orderBy('users.nombre','asc')->paginate(3);
         }
 
         return [
             'pagination' => [
-                'total'         => $proveedor->total(),
-                'current_page'  => $proveedor->currentPage(),
-                'per_page'      => $proveedor->perPage(),
-                'last_page'     => $proveedor->lastPage(),
-                'from'          => $proveedor->firstItem(),
-                'to'            => $proveedor->lastItem()
+                'total'         => $usuarios->total(),
+                'current_page'  => $usuarios->currentPage(),
+                'per_page'      => $usuarios->perPage(),
+                'last_page'     => $usuarios->lastPage(),
+                'from'          => $usuarios->firstItem(),
+                'to'            => $usuarios->lastItem()
             ],
-            'personas'    => $proveedor
+            'usuarios'    => $usuarios
         ];
     }
 }

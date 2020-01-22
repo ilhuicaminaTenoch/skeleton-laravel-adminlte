@@ -28,6 +28,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/rol/select-rol','RolController@selectRol');
 
         Route::get('/user','UserController@index');
+        Route::get('/user/listado', 'UserController@listUser');
         Route::post('/user/registrar','UserController@store');
         Route::put('/user/actualizar','UserController@update');
         Route::put('/user/activar','UserController@activar');

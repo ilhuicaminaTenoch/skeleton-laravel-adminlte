@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12">
-                <example-component></example-component>
+                <usuarios></usuarios>
             </div>
         </div>
     </div>
