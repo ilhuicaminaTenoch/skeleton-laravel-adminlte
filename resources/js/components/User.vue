@@ -51,7 +51,14 @@
                     </td>
                     <td v-text="usuario.nombre"></td>
                     <td v-text="usuario.email"></td>
-                    <td v-text="usuario.estatus"></td>
+                    <td>
+                        <template v-if="usuario.estatus">
+                            <span class="badge bg-primary">Activo</span>
+                        </template>
+                        <template v-else>
+                            <span class="badge bg-danger">Desactivo</span>
+                        </template>
+                    </td>
                     <td v-text="usuario.rol"></td>
                 </tr>
                 </tbody>
