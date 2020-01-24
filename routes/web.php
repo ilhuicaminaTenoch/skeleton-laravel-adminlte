@@ -24,8 +24,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     Route::group(['middleware' => ['Administrador']], function () {
-        Route::get('/rol','RolController@index');
-        Route::get('/rol/select-rol','RolController@selectRol');
+        Route::get('/rol','RolesController@index');
+        Route::get('/rol/select-rol','RolesController@selectRol');
 
         Route::get('/user','UserController@index');
         Route::get('/user/listado', 'UserController@listUser');

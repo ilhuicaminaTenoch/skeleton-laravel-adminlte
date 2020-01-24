@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -36,7 +37,22 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (!$request->ajax()) return redirect('/');
+        try {
+            DB::beginTransaction();
+            $usuario = new User();
+
+            $usuario->nombre = $request->nombre;
+            $usuario->email = $request->email;
+            $usuario->password = $request->password;
+            $usuario->activo = $request->activo;
+            $usuario->id_rol = $request->idRol;
+            $usuario->save();
+
+            DB::commit();
+        }catch (\Exception $exception){
+            DB::rollBack();
+        }
     }
 
     /**
