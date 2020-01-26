@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -33,7 +34,7 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -41,10 +42,9 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
             $usuario = new User();
-
             $usuario->nombre = $request->nombre;
             $usuario->email = $request->email;
-            $usuario->password = $request->password;
+            $usuario->password = Hash::make($request->password);
             $usuario->activo = $request->activo;
             $usuario->id_rol = $request->idRol;
             $usuario->save();

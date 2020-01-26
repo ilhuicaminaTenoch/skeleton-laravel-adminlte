@@ -2,7 +2,8 @@
     <div class="main">
         <div class="card">
             <div class="card-header">
-                <button type="button" @click="abrirModal('usuario', 'registrar')" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+                <button type="button" @click="abrirModal('usuario', 'registrar')" class="btn btn-primary"
+                        data-toggle="modal" data-target="#modal-default">
                     <i class="fa fa-plus"></i>&nbsp;Nuevo
                 </button>
             </div>
@@ -86,7 +87,7 @@
             <!-- /.card-body -->
         </div>
         <!--Inicio del modal agregar/actualizar-->
-        <div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
+        <div class="modal fade" :class="{'mostrar': modal}" id="modal-default" style="display: none;" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -102,18 +103,27 @@
                             <form role="form">
                                 <div class="card-body">
                                     <div class="form-group">
+                                        <label for="nombre">Nombre</label>
+                                        <input type="text" class="form-control" :class="hasErrorNombre" id="nombre"
+                                               name="nombre" v-model="nombre" placeholder="Nombre completo">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input type="text" class="form-control" id="email" name="email" placeholder="Introduce email">
+                                        <input type="text" class="form-control" :class="hasErrorEmail" id="email"
+                                               name="email" v-model="email" placeholder="Introduce email">
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Password</label>
-                                        <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
+                                        <input type="password" class="form-control" :class="hasErrorPassword"
+                                               id="password" name="password" v-model="password"
+                                               placeholder="Contraseña">
                                     </div>
                                     <div class="form-group">
                                         <label>Rol</label>
-                                        <select class="form-control" v-model="idRol">
+                                        <select class="form-control" :class="hasErrorIdRol" v-model="idRol">
                                             <option value="0" selected>Seleccione una opcion</option>
-                                            <option v-for="rol in arrayRoles" :key="rol.id" :value="rol.id" v-text="rol.nombre"></option>
+                                            <option v-for="rol in arrayRoles" :key="rol.id" :value="rol.id"
+                                                    v-text="rol.nombre"></option>
                                         </select>
                                     </div>
                                 </div>
@@ -142,9 +152,8 @@
                 usuarios: [],
                 offset: 3,
                 modal: 0,
-                nombre: '',
                 email: '',
-                idRol: '',
+                idRol: 0,
                 tituloModal: '',
                 paginacion: {
                     'total': 0,
@@ -156,8 +165,12 @@
                 },
                 password: '',
                 errorUsuario: 0,
-                errorMostrarMensajeUsuario: '',
-
+                hasErrorEmail: '',
+                hasErrorPassword: '',
+                hasErrorIdRol: '',
+                hasErrorNombre: '',
+                allerros: [],
+                nombre: '',
             }
         },
         computed: {
@@ -190,7 +203,8 @@
                 this.selectRol();
                 switch (modelo) {
                     case 'usuario':
-                        switch(accion){
+                        this.modal = 1;
+                        switch (accion) {
                             case 'registrar':
                                 this.tituloModal = "Registro de uusarios";
                                 break;
@@ -205,10 +219,9 @@
             },
             cerrarModal() {
                 this.modal = 0;
-                this.tituloModal = '';
                 this.nombre = '';
+                this.tituloModal = '';
                 this.email = '';
-                this.usuario = '';
                 this.password = '';
                 this.idRol = 0;
             },
@@ -230,37 +243,59 @@
                     console.log(error);
                 });
             },
-            registrarUsuario(){
-                if (this.validarUsuario()){
+            registrarUsuario() {
+                if (this.validarUsuario()) {
                     return
                 }
                 let me = this;
-                axios.post('/user/registrar',{
-                    'nombre' : this.nombre,
-                    'email' : this.email,
-                    'usuario' : this.usuario,
-                    'password':this.password,
-                    'idRol' : this.idRol,
+                axios.post('/user/registrar', {
+                    'nombre': this.nombre,
+                    'email': this.email,
+                    'password': this.password,
+                    'idRol': this.idRol,
                     'activo': 1
                 }).then(function (response) {
                     me.cerrarModal();
-                    me.listarPersona(1,'','nombre');
-                }).catch(function (error) {
+                    me.listarPersona(1, '', 'nombre');
+                }).catch((error) => {
                     console.log(error);
+                    this.allerros = error.response.data.errors;
+                    this.success = false;
                 });
             },
-            validarUsuario(){
-                this.errorUsuario = 0;
-                this.errorMostrarMensajeUsuario = [];
+            validarUsuario() {
+                let valido = 0;
+                if (this.nombre.length === 0){
+                    this.hasErrorEmail = 'is-invalid';
+                    this.$toastr.e("ERROR", "El nombre. No puede estar vacio");
+                    valido = 1;
+                }else{
+                    this.hasErrorEmail =  'is-valid';
+                }
+                 if (this.email.length === 0){
+                     this.hasErrorEmail = 'is-invalid';
+                     this.$toastr.e("ERROR", "El email. No puede estar vacio");
+                     valido = 1;
+                 }else{
+                     this.hasErrorEmail =  'is-valid';
+                 }
 
-                if (!this.nombre) this.errorMostrarMensajeUsuario.push("El nombre de la persona no puede estar vacio.");
-                if (!this.usuario) this.errorMostrarMensajeUsuario.push("El usuario no puede estar vacio.");
-                if (!this.password) this.errorMostrarMensajeUsuario.push("El password no puede estar vacio.");
-                if (this.idRol == 0) this.errorMostrarMensajeUsuario.push("Debes seleccionar un rol para el usuario");
+                if (this.password.length === 0){
+                    this.hasErrorPassword = 'is-invalid';
+                    this.$toastr.e("SERROR", "La contrasena. No puede estar vacia");
+                    valido = 1;
 
-                if (this.errorMostrarMensajeUsuario.length) this.errorUsuario = 1;
-
-                return this.errorUsuario;
+                }else{
+                    this.hasErrorEmail =  'is-valid';
+                }
+                if (this.idRol === 0){
+                    this.hasErrorIdRol = 'is-invalid';
+                    this.$toastr.e("ERROR", "Selecciona un Rol");
+                    valido = 1;
+                }else{
+                    this.hasErrorIdRol =  'is-valid';
+                }
+                return valido;
             },
         },
         created() {
