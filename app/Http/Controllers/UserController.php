@@ -111,13 +111,13 @@ class UserController extends Controller
             $usuarios = User::join('roles', 'users.id_rol', '=', 'roles.id')
                 ->select('users.id','users.nombre','users.password', 'users.email',
                     'users.activo as estatus' ,'users.id_rol', 'roles.nombre as rol')
-                ->orderBy('users.nombre','asc')->paginate(3);
+                ->orderBy('users.nombre','asc')->paginate(10);
         }else{
             $usuarios = User::join('roles', 'users.id_rol', '=', 'roles.id')
                 ->select('users.id','users.nombre','users.password', 'users.email',
                     'users.activo as estatus', 'users.id_rol', 'roles.nombre as rol')
                 ->where('users.'.$criterio, 'like', '%'.$buscar.'%')
-                ->orderBy('users.nombre','asc')->paginate(3);
+                ->orderBy('users.nombre','asc')->paginate(10);
         }
 
         return [

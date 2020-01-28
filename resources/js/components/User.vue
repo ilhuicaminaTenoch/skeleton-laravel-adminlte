@@ -87,7 +87,7 @@
             <!-- /.card-body -->
         </div>
         <!--Inicio del modal agregar/actualizar-->
-        <div class="modal fade" :class="{'mostrar': modal}" id="modal-default" style="display: none;" aria-hidden="true">
+        <div class="modal fade" id="modal-default">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -138,6 +138,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -150,7 +151,7 @@
                 criterio: 'nombre',
                 errorUsuario: '',
                 usuarios: [],
-                offset: 3,
+                offset: 10,
                 modal: 0,
                 email: '',
                 idRol: 0,
@@ -203,7 +204,8 @@
                 this.selectRol();
                 switch (modelo) {
                     case 'usuario':
-                        this.modal = 1;
+                        //this.modal = 1;
+                        $('#modal-default').modal('show');
                         switch (accion) {
                             case 'registrar':
                                 this.tituloModal = "Registro de uusarios";
@@ -218,7 +220,7 @@
                 me.listarPersona(page, buscar, criterio);
             },
             cerrarModal() {
-                this.modal = 0;
+                $('#modal-default').modal('hide');
                 this.nombre = '';
                 this.tituloModal = '';
                 this.email = '';
