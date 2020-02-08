@@ -37,7 +37,7 @@
                     <tbody>
                     <tr v-for="usuario in usuarios" :key="usuario.id">
                         <td>
-                            <button type="button" class="btn btn-warning btn-sm">
+                            <button type="button" class="btn btn-warning btn-sm" @click="abrirModal('usuario', 'actualizar', usuario)">
                                 <i class="fa fa-pen"></i>
                             </button>
                             <template v-if="usuario.estatus">
@@ -133,7 +133,8 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" @click="registrarUsuario()">Guardar</button>
+                        <button type="button" v-if="tipoAccion==1" class="btn btn-primary" @click="registrarUsuario()">Guardar</button>
+                        <button type="button" v-if="tipoAccion==2" class="btn btn-primary" @click="actualizarUsuario()">Actualizar</button>
                     </div>
                 </div>
             </div>
@@ -172,6 +173,8 @@
                 hasErrorNombre: '',
                 allerros: [],
                 nombre: '',
+                tipoAccion : 0,
+                idUsuario: 0,
             }
         },
         computed: {
@@ -208,11 +211,45 @@
                         $('#modal-default').modal('show');
                         switch (accion) {
                             case 'registrar':
-                                this.tituloModal = "Registro de uusarios";
+                                this.tipoAccion = 1;
+                                this.tituloModal = "Registro de Usarios";
+                                this.nombre = "";
+                                this.email = "";
+                                this.idRol = "";
+                                this.password = "";
                                 break;
+                            case 'actualizar':
+                                this.tituloModal = "Actualizar Usuario";
+                                this.nombre = data['nombre'];
+                                this.email = data['email'];
+                                this.idRol = data['id_rol'];
+                                this.password = "";
+                                this.tipoAccion = 2;
+                                this.idUsuario = data['id'];
+                                break
                         }
                         break;
                 }
+            },
+            actualizarUsuario(){
+                if (this.validarUsuario()){
+                    return;
+                }
+                let me = this;
+                axios.put('/user/actualizar',{
+                    'nombre': this.nombre,
+                    'email': this.email,
+                    'password': this.password,
+                    'idRol': this.idRol,
+                    'activo': 1,
+                    'id': this.idUsuario
+                }).then(function (response) {
+                    me.cerrarModal();
+                    me.listarPersona(1,'','nombre');
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
             },
             cambiarPagina(page, buscar, criterio) {
                 let me = this;
@@ -226,6 +263,7 @@
                 this.email = '';
                 this.password = '';
                 this.idRol = 0;
+                this.idUsuario = 0;
             },
             listarPersona(page, buscar, criterio) {
                 var url = '/user/listado?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;

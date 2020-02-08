@@ -84,9 +84,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        if (!$request->ajax()) return redirect('/');
+
+        try {
+            DB::beginTransaction();
+            $usuario = User::findOrFail($request->id);
+
+            $usuario->nombre = $request->nombre;
+            $usuario->email = $request->email;
+            $usuario->password = Hash::make($request->password);
+            $usuario->activo = $request->activo;
+            $usuario->id_rol = $request->idRol;
+            $usuario->save();
+            DB::commit();
+
+        }catch (\Exception $exception){
+            DB::rollBack();
+            dd($exception);
+        }
     }
 
     /**

@@ -2111,6 +2111,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -2135,7 +2136,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'to': 0
       },
       password: ''
-    }, _defineProperty(_ref, "errorUsuario", 0), _defineProperty(_ref, "hasErrorEmail", ''), _defineProperty(_ref, "hasErrorPassword", ''), _defineProperty(_ref, "hasErrorIdRol", ''), _defineProperty(_ref, "hasErrorNombre", ''), _defineProperty(_ref, "allerros", []), _defineProperty(_ref, "nombre", ''), _ref;
+    }, _defineProperty(_ref, "errorUsuario", 0), _defineProperty(_ref, "hasErrorEmail", ''), _defineProperty(_ref, "hasErrorPassword", ''), _defineProperty(_ref, "hasErrorIdRol", ''), _defineProperty(_ref, "hasErrorNombre", ''), _defineProperty(_ref, "allerros", []), _defineProperty(_ref, "nombre", ''), _defineProperty(_ref, "tipoAccion", 0), _defineProperty(_ref, "idUsuario", 0), _ref;
   },
   computed: {
     isActived: function isActived() {
@@ -2181,12 +2182,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           switch (accion) {
             case 'registrar':
-              this.tituloModal = "Registro de uusarios";
+              this.tipoAccion = 1;
+              this.tituloModal = "Registro de Usarios";
+              this.nombre = "";
+              this.email = "";
+              this.idRol = "";
+              this.password = "";
+              break;
+
+            case 'actualizar':
+              this.tituloModal = "Actualizar Usuario";
+              this.nombre = data['nombre'];
+              this.email = data['email'];
+              this.idRol = data['id_rol'];
+              this.password = "";
+              this.tipoAccion = 2;
+              this.idUsuario = data['id'];
               break;
           }
 
           break;
       }
+    },
+    actualizarUsuario: function actualizarUsuario() {
+      if (this.validarUsuario()) {
+        return;
+      }
+
+      var me = this;
+      axios.put('/user/actualizar', {
+        'nombre': this.nombre,
+        'email': this.email,
+        'password': this.password,
+        'idRol': this.idRol,
+        'activo': 1,
+        'id': this.idUsuario
+      }).then(function (response) {
+        me.cerrarModal();
+        me.listarPersona(1, '', 'nombre');
+      })["catch"](function (error) {
+        console.log(error);
+      });
     },
     cambiarPagina: function cambiarPagina(page, buscar, criterio) {
       var me = this;
@@ -2200,6 +2236,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.email = '';
       this.password = '';
       this.idRol = 0;
+      this.idUsuario = 0;
     },
     listarPersona: function listarPersona(page, buscar, criterio) {
       var _this = this;
@@ -44475,9 +44512,25 @@ var render = function() {
                 _c(
                   "td",
                   [
-                    _vm._m(1, true),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-warning btn-sm",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.abrirModal(
+                              "usuario",
+                              "actualizar",
+                              usuario
+                            )
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fa fa-pen" })]
+                    ),
                     _vm._v(" "),
-                    usuario.estatus ? [_vm._m(2, true)] : [_vm._m(3, true)]
+                    usuario.estatus ? [_vm._m(1, true)] : [_vm._m(2, true)]
                   ],
                   2
                 ),
@@ -44605,7 +44658,7 @@ var render = function() {
               domProps: { textContent: _vm._s(_vm.tituloModal) }
             }),
             _vm._v(" "),
-            _vm._m(4)
+            _vm._m(3)
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
@@ -44777,19 +44830,37 @@ var render = function() {
               [_vm._v("Cerrar")]
             ),
             _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    return _vm.registrarUsuario()
-                  }
-                }
-              },
-              [_vm._v("Guardar")]
-            )
+            _vm.tipoAccion == 1
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.registrarUsuario()
+                      }
+                    }
+                  },
+                  [_vm._v("Guardar")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.tipoAccion == 2
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.actualizarUsuario()
+                      }
+                    }
+                  },
+                  [_vm._v("Actualizar")]
+                )
+              : _vm._e()
           ])
         ])
       ])
@@ -44814,16 +44885,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Perfil")])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-warning btn-sm", attrs: { type: "button" } },
-      [_c("i", { staticClass: "fa fa-pen" })]
-    )
   },
   function() {
     var _vm = this

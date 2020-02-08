@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc133acf-08be-471a-9b7c-43a1153d3d5c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/User.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/User.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/home.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +144,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Http/Middleware" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Documentos/docker-compose-lamp" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.php.debug.servers" />
   </component>
@@ -192,6 +192,14 @@
       <workItem from="1580141772421" duration="2362000" />
       <workItem from="1580145365257" duration="6001000" />
       <workItem from="1580153322630" duration="8000" />
+      <workItem from="1580172418225" duration="124000" />
+      <workItem from="1580361504080" duration="633000" />
+      <workItem from="1580402211897" duration="434000" />
+      <workItem from="1581033010917" duration="1265000" />
+      <workItem from="1581091643840" duration="48000" />
+      <workItem from="1581091720312" duration="941000" />
+      <workItem from="1581093848903" duration="108000" />
+      <workItem from="1581179388549" duration="3865000" />
     </task>
     <task id="LOCAL-00001" summary="ADD: Se cambia el idioma y se hacen pruebas con el menu">
       <created>1579051593303</created>
@@ -254,6 +262,10 @@
       <screen x="0" y="23" width="2560" height="1322" />
     </state>
     <state x="430" y="483" key="#com.intellij.fileTypes.FileTypeChooser/0.23.2560.1322@0.23.2560.1322" timestamp="1579038131010" />
+    <state x="678" y="280" width="624" height="554" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1581091657983">
+      <screen x="70" y="27" width="1850" height="1053" />
+    </state>
+    <state x="678" y="280" width="624" height="554" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/70.27.1850.1053@70.27.1850.1053" timestamp="1581091657983" />
     <state x="438" y="437" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1579041836800">
       <screen x="0" y="23" width="2560" height="1322" />
     </state>
@@ -274,11 +286,11 @@
       <screen x="0" y="23" width="2560" height="1322" />
     </state>
     <state x="315" y="463" key="EditFileWatcherDialog/0.23.2560.1322@0.23.2560.1322" timestamp="1579037478245" />
-    <state x="778" y="311" width="424" height="491" key="FileChooserDialogImpl" timestamp="1580142105041">
+    <state x="778" y="311" width="424" height="491" key="FileChooserDialogImpl" timestamp="1580361542578">
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
     <state x="778" y="311" width="424" height="491" key="FileChooserDialogImpl/70.27.1850.1053/70.27.1850.1053@70.27.1850.1053" timestamp="1579711344219" />
-    <state x="778" y="311" key="FileChooserDialogImpl/70.27.1850.1053@70.27.1850.1053" timestamp="1580142105041" />
+    <state x="778" y="311" width="424" height="491" key="FileChooserDialogImpl/70.27.1850.1053@70.27.1850.1053" timestamp="1580361542578" />
     <state x="498" y="603" key="Github.Dialog.Accounts.Choose" timestamp="1579221408801">
       <screen x="0" y="23" width="2560" height="1322" />
     </state>
@@ -349,12 +361,12 @@
       <screen x="0" y="23" width="2560" height="1322" />
     </state>
     <state x="300" y="419" key="Vcs.Push.Dialog.v2/0.23.2560.1322@0.23.2560.1322" timestamp="1579221388787" />
-    <state x="327" y="420" key="com.intellij.ide.util.TipDialog" timestamp="1580153322593">
+    <state x="327" y="420" key="com.intellij.ide.util.TipDialog" timestamp="1581093948221">
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
     <state x="355" y="516" key="com.intellij.ide.util.TipDialog/0.23.2560.1322@0.23.2560.1322" timestamp="1579216289070" />
     <state x="327" y="420" key="com.intellij.ide.util.TipDialog/70.27.1850.1053/70.27.1850.1053@70.27.1850.1053" timestamp="1579796530337" />
-    <state x="327" y="420" key="com.intellij.ide.util.TipDialog/70.27.1850.1053@70.27.1850.1053" timestamp="1580153322593" />
+    <state x="327" y="420" key="com.intellij.ide.util.TipDialog/70.27.1850.1053@70.27.1850.1053" timestamp="1581093948221" />
     <state x="371" y="426" width="657" height="514" key="find.popup" timestamp="1579219596500">
       <screen x="0" y="23" width="2560" height="1322" />
     </state>
