@@ -149,4 +149,21 @@ class UserController extends Controller
             'usuarios'    => $usuarios
         ];
     }
+
+    public function desactivar(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        $user = User::findOrFail($request->id);
+        $user->activo = '0';
+        $user->save();
+    }
+
+    public function activar(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $user = User::findOrFail($request->id);
+        $user->activo = '1';
+        $user->save();
+    }
 }

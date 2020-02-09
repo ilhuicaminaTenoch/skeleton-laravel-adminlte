@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
                         [
                             'text' => 'Roles',
                             'icon' => 'fas fa-fw fa-portrait',
-                            'url' => '#',
+                            'url' => '/rol',
                         ],
 
                     ]

@@ -41,12 +41,12 @@
                                 <i class="fa fa-pen"></i>
                             </button>
                             <template v-if="usuario.estatus">
-                                <button type="button" class="btn btn-danger btn-sm">
+                                <button type="button" class="btn btn-danger btn-sm" @click="desactivarUsuario(usuario.id)">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </template>
                             <template v-else>
-                                <button type="button" class="btn btn-info btn-sm">
+                                <button type="button" class="btn btn-secondary btn-sm" @click="activarUsuario(usuario.id)">
                                     <i class="fa fa-check"></i>
                                 </button>
                             </template>
@@ -337,6 +337,60 @@
                 }
                 return valido;
             },
+            desactivarUsuario(userId){
+                Swal.fire({
+                    title: '¿Estás seguro??',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, desactivar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+                        axios.put('/user/desactivar',{
+                            'id' : userId
+                        }).then(function (response) {
+                            me.listarPersona(1,'','nombre');
+                            Swal.fire(
+                                'Desactivado!',
+                                'Tu usuario ha sido desactivado',
+                                'success'
+                            )
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+                    }
+                });
+            },
+            activarUsuario(userId){
+                Swal.fire({
+                    title: '¿Esta seguro de activar este usuario?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, activar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+                        axios.put('/user/activar',{
+                            'id' : userId
+                        }).then(function (response) {
+                            me.listarPersona(1,'','nombre');
+                            Swal.fire(
+                                'Activado!',
+                                'Tu usuario ha sido activado',
+                                'success'
+                            )
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+                    }
+                });
+            }
         },
         created() {
             this.listarPersona(1, this.buscar, this.criterio);

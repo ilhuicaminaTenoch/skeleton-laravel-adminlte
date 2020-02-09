@@ -29,6 +29,7 @@
         "admin-lte": "^3.0",
         "icheck-bootstrap": "^3.0.1",
         "overlayscrollbars": "^1.10.2",
+        "sweetalert2": "^9.7.2",
         "vue-toastr": "^2.1.2"
     }
 }
