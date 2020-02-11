@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Roles;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RolesController extends Controller
 {
@@ -18,16 +19,6 @@ class RolesController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -35,7 +26,20 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (!$request->ajax()) return redirect('/');
+        try {
+            DB::beginTransaction();
+            $rol = new Roles();
+            $rol->nombre = $request->nombre;
+            $rol->descripcion = $request->descripcion;
+            $rol->activo = $request->activo;
+            $rol->save();
+
+            DB::commit();
+        }catch (\Exception $exception){
+            DB::rollBack();
+            dd($exception);
+        }
     }
 
     /**
@@ -67,9 +71,24 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        if (!$request->ajax()) return redirect('/');
+
+        try {
+            DB::beginTransaction();
+            $rol = Roles::findOrFail($request->id);
+
+            $rol->nombre = $request->nombre;
+            $rol->descripcion = $request->descripcion;
+            $rol->activo = $request->activo;
+            $rol->save();
+            DB::commit();
+
+        }catch (\Exception $exception){
+            DB::rollBack();
+            dd($exception);
+        }
     }
 
     /**
@@ -89,5 +108,51 @@ class RolesController extends Controller
             ->select('id','nombre')
             ->orderBy('nombre', 'asc')->get();
         return ['roles' => $roles];
+    }
+
+    public function listado(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $buscar = $request->buscar;
+        $criterio = $request->criterio;
+
+        if ($buscar == ''){
+            $roles = Roles::select('roles.id','roles.nombre','roles.descripcion', 'roles.activo')
+                ->orderBy('roles.nombre','asc')->paginate(10);
+        }else{
+            $roles = Roles::select('roles.id','roles.nombre','roles.descripcion','roles.activo')
+                ->where('roles.'.$criterio, 'like', '%'.$buscar.'%')
+                ->orderBy('roles.nombre','asc')->paginate(10);
+        }
+
+        return [
+            'pagination' => [
+                'total'         => $roles->total(),
+                'current_page'  => $roles->currentPage(),
+                'per_page'      => $roles->perPage(),
+                'last_page'     => $roles->lastPage(),
+                'from'          => $roles->firstItem(),
+                'to'            => $roles->lastItem()
+            ],
+            'roles'    => $roles
+        ];
+    }
+
+    public function desactivar(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+        $user = Roles::findOrFail($request->id);
+        $user->activo = '0';
+        $user->save();
+    }
+
+    public function activar(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        $user = Roles::findOrFail($request->id);
+        $user->activo = '1';
+        $user->save();
     }
 }

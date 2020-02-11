@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
             if ($idRol == 1) {
                 $event->menu->add('ADMINISTRADOR');
                 $event->menu->add([
-                    'text' => 'Acceso',
+                    'text' => 'Accesos',
                     'icon' => 'fas fa-fw fa-universal-access',
                     'submenu' => [
                         [
@@ -42,6 +42,32 @@ class AppServiceProvider extends ServiceProvider
                             'text' => 'Roles',
                             'icon' => 'fas fa-fw fa-portrait',
                             'url' => '/rol',
+                        ],
+                    ],
+                ]);
+                $event->menu->add([
+                    'text' => 'CATEGORIAS',
+                    'icon' => 'fas fa-fw fa-clipboard-list',
+                    'submenu' => [
+                        [
+                            'text' => 'Telenovelas',
+                            'icon' => 'fas fa-couch',
+                            'url' => '/listado-categorias',
+                        ],
+                        [
+                            'text' => 'Programas de tv',
+                            'icon' => 'fas fa-tv',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Comedia',
+                            'icon' => 'fas fa-theater-masks',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Realities',
+                            'icon' => 'fas fa-vr-cardboard',
+                            'url' => '#'
                         ],
 
                     ]

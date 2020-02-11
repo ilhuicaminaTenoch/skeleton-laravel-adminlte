@@ -23,6 +23,7 @@ window.Swal = require('sweetalert2');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('usuarios', require('./components/User.vue').default);
+Vue.component('roles', require('./components/Roles.vue').default);
 
 
 /**

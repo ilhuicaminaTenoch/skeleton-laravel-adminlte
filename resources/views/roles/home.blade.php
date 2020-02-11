@@ -9,7 +9,7 @@
 @section('content')
         <div class="row justify-content-center" id="app">
             <div class="col-12">
-
+                <roles></roles>
             </div>
         </div>
 @endsection
